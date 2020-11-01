@@ -50,6 +50,39 @@ namespace homework_5._1
             str = str.Replace("Ю", "IU");
             str = str.Replace("Я", "IA");
 
+            str = str.Replace("а", "a");
+            str = str.Replace("б", "b"); 
+            str = str.Replace("в", "v"); 
+            str = str.Replace("г", "g"); 
+            str = str.Replace("д", "d"); 
+            str = str.Replace("е", "e"); 
+            str = str.Replace("ё", "e"); 
+            str = str.Replace("ж", "zh");
+            str = str.Replace("з", "z");
+            str = str.Replace("и", "i");
+            str = str.Replace("й", "i");
+            str = str.Replace("к", "k");
+            str = str.Replace("л", "l");
+            str = str.Replace("м", "m");
+            str = str.Replace("н", "n");
+            str = str.Replace("о", "o");
+            str = str.Replace("п", "p");
+            str = str.Replace("р", "r");
+            str = str.Replace("с", "s");
+            str = str.Replace("т", "t");
+            str = str.Replace("у", "u");
+            str = str.Replace("ф", "f");
+            str = str.Replace("х", "kh");
+            str = str.Replace("ц", "tc");
+            str = str.Replace("ч", "ch");
+            str = str.Replace("ш", "sh");
+            str = str.Replace("щ", "shch");
+            str = str.Replace("ъ", "ie");
+            str = str.Replace("ы", "y");
+            str = str.Replace("э", "e");
+            str = str.Replace("ю", "iu");
+            str = str.Replace("я", "ia");
+           
             return str;
         }
     }
