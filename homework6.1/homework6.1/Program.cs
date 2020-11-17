@@ -15,14 +15,16 @@ namespace homework6._1
             if (EvaluateLogicalExpression(a, b, c))
                 answer = "Да.";
 
-            Console.WriteLine("Верно ли, что только одно из чисел k, m или n кратно пяти? " + 
+            Console.WriteLine("Верно ли, что только одно из чисел k, m или n кратно пяти? " +
                 answer);
 
             Console.ReadKey();
         }
         static bool EvaluateLogicalExpression(int k, int m, int n)
         {
-            return ((k % 5 == 0 && m % 5 != 0 && n % 5 != 0) || (m % 5 == 0 && k % 5 != 0 && n % 5 != 0)|| (n % 5 == 0 && k % 5 != 0 && m% 5 != 0));
+            return k % 5 == 0 && m % 5 != 0 && n % 5 != 0 ||
+                   m % 5 == 0 && k % 5 != 0 && n % 5 != 0 ||
+                   n % 5 == 0 && k % 5 != 0 && m % 5 != 0;
         }
         static int GetNumber(string numberName)
         {
