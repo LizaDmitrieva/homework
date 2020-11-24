@@ -6,35 +6,24 @@ namespace homework_6._3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите позицию белой ладьи ");
-            string whiteRook = Console.ReadLine();
+            Console.WriteLine("Введите позицию белой ладьи");
+            var  whiteRookPosition = Console.ReadLine();
 
-            Console.WriteLine("Введите позицию черного короля ");
-            string blackKing = Console.ReadLine();
+            Console.WriteLine("Введите позицию черного короля");
+            var blackKingPosition = Console.ReadLine();
 
-            int wx, wy, bx, by;
-
-            GetCoordinates(whiteRook, out wx, out wy);
-            GetCoordinates(blackKing, out bx, out by);
-
-            string result = "Нет, не может.";
-
-            if (whiteRook != blackKing &&
-                wx != bx &&
-                wy != by &&
-                (1 < Math.Abs(wx - bx) || 1 < Math.Abs(wy - by)))
+        
+            if (CheckPosition(whiteRookPosition, blackKingPosition))
             {
-                Console.WriteLine("Введите новую позицию белой ладьи ");
-                string newRook = Console.ReadLine();
-                int wx1, wy1;
-                GetCoordinates(newRook, out wx1, out wy1);
-                if (CheckNewPosition(bx, by, wx1, wy1))
-                {
-                    result = "Да, может.";
-                }
+                Console.WriteLine("Введите ход белой ладьи");
+                var whiteRookMove = Console.ReadLine();
+                if (CanRookMakeSafeMove(whiteRookPosition, whiteRookMove, blackKingPosition))
+                    Console.WriteLine("Ладья может ходить");
+                else
+                    Console.WriteLine("Ладья не может ходить");
             }
-
-            Console.WriteLine("Ответ: " + result);
+            else
+                Console.WriteLine("Введенные позиции некорректны");
 
             Console.ReadKey();
         }
@@ -50,6 +39,39 @@ namespace homework_6._3
             return  wx1 != bx &&
                     wy1 != by &&
                     (1 < Math.Abs(wx1 - bx) || 1 < Math.Abs(wy1 - by));
+        }
+
+        static bool CanRookMakeMove(string start, string end)
+        {
+            if (start == end)
+                return false;
+
+            int startX, startY, endX, endY;
+            GetCoordinates(start, out startX, out startY);
+            GetCoordinates(end, out endX, out endY);
+
+            return (startX == endX && startY != endY) || (startY == endY && startX != endX);
+        }
+
+        static bool CanKingMakeMove(string start, string end)
+        {
+            if (start == end)
+                return false;
+
+            int startX, startY, endX, endY;
+            GetCoordinates(start, out startX, out startY);
+            GetCoordinates(end, out endX, out endY);
+
+            return Math.Abs(endX - startX) <= 1 && Math.Abs(endY - startY) <= 1;
+        }
+        static bool CheckPosition(string whitePos, string blackPos)
+        {
+            return whitePos != blackPos && !CanRookMakeMove(whitePos, blackPos) && !CanKingMakeMove(whitePos, blackPos);
+        }
+         
+        static bool CanRookMakeSafeMove(string rookStartPos, string rookEndPos, string kingPos)
+        {
+            return CanRookMakeMove(rookStartPos, rookEndPos) && !CanKingMakeMove(kingPos, rookEndPos);
         }
 
 
