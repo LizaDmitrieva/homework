@@ -111,6 +111,9 @@ namespace homework10
                 }
 
                 Console.WriteLine($"{i+1,2}: {sEven - sOdd, 3} ");
+
+                sEven=0;
+                sOdd=0;
             }
         }
     }
