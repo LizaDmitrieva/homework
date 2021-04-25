@@ -67,4 +67,171 @@ namespace FinishedProductsUnitTest
             return new Commodity("J1S45F", "Cup", 339, 500, UnitOfGoods.Piece);
         }
     }
+
+    [TestClass]
+    public class FragileGoodsUnitTest
+    { 
+        [TestMethod] 
+        public void ConstructorFGTestMethod() 
+        { 
+            var cup = GetTestFragileGoods(); 
+            Assert.AreEqual(100, cup.MaxInStack); 
+        } 
+
+        [TestMethod] 
+        public void PrintInfoFGTestMethod() 
+        { 
+            var cup = GetTestFragileGoods(); 
+            var lines = new  []  
+            {
+                "J1S45F Cup", 
+                "Оптовая цена: 339. Розничная цена: 500. Описание: Синяя, большая. В наличии: 5 шт.",
+                "Максимальное количество единиц товара в стопке: 100 шт."
+            };
+
+            cup.Description = "Синяя, большая";
+            cup.Availability = 5;
+
+            TextWriter oldOut = Console.Out; 
+
+            using (FileStream file = new   FileStream("test.txt", FileMode.Create)) 
+            { 
+                using (TextWriter writer = new   StreamWriter(file)) 
+                { 
+                    Console.SetOut(writer); cup.PrintInfo(); 
+                } 
+            } 
+
+            Console.SetOut(oldOut);
+
+            using (FileStream file = new   FileStream("test.txt", FileMode.Open)) 
+            { 
+                using (TextReader reader = new   StreamReader(file)) 
+                { 
+                    var   i = 0; while (!(reader as StreamReader).EndOfStream) 
+                    Assert.AreEqual(lines[i++], reader.ReadLine()); 
+                    Assert.AreEqual(lines.Length, i); 
+                } 
+            } 
+
+            File.Delete("test.txt"); 
+        } 
+        private FragileGoods GetTestFragileGoods() 
+        { 
+            var goods = new FragileGoods("J1S45F", "Cup", 339, 500, UnitOfGoods.Piece, 100);
+            return goods;
+        } 
+    }
+
+    [TestClass]
+    public class PerishableGoodsUnitTest
+    {
+        [TestMethod]
+        public void ConstructorPGTestMethod()
+        {
+            var milk = GetTestPerishableGoods();
+            Assert.AreEqual(5, milk.MaxShelfLife);
+        }
+
+        [TestMethod]
+        public void PrintInfoPGTestMethod()
+        {
+            var milk = GetTestPerishableGoods();
+            var lines = new[]
+            {
+                "K1K45F Milk",
+                "Оптовая цена: 30. Розничная цена: 45. Описание: Коровье, пастеризованное. В наличии: 10 шт.",
+                "Максимальный срок хранения: 5 дн."
+            };
+
+            milk.Description = "Коровье, пастеризованное";
+            milk.Availability = 10;
+
+            TextWriter oldOut = Console.Out;
+
+            using (FileStream file = new FileStream("test.txt", FileMode.Create))
+            {
+                using (TextWriter writer = new StreamWriter(file))
+                {
+                    Console.SetOut(writer); milk.PrintInfo();
+                }
+            }
+
+            Console.SetOut(oldOut);
+
+            using (FileStream file = new FileStream("test.txt", FileMode.Open))
+            {
+                using (TextReader reader = new StreamReader(file))
+                {
+                    var i = 0; while (!(reader as StreamReader).EndOfStream)
+                    Assert.AreEqual(lines[i++], reader.ReadLine());
+                    Assert.AreEqual(lines.Length, i);
+                }
+            }
+
+            File.Delete("test.txt");
+        }
+        private PerishableGoods GetTestPerishableGoods()
+        {
+            var goods = new PerishableGoods("K1K45F", "Milk", 30, 45, UnitOfGoods.Piece, 5);
+            return goods;
+        }
+    }
+
+    [TestClass]
+    public class DimensionalGoodsUnitTest
+    {
+        [TestMethod]
+        public void ConstructorDGTestMethod()
+        {
+            var table = GetTestDimensionalGoods();
+            Assert.AreEqual(150, table.Length);
+            Assert.AreEqual(70, table.Width);
+            Assert.AreEqual(100, table.Heigth);
+        }
+
+        [TestMethod]
+        public void PrintInfoDGTestMethod()
+        {
+            var table = GetTestDimensionalGoods();
+            var lines = new[]
+            {
+                "T2M34K Table",
+                "Оптовая цена: 5000. Розничная цена: 6500. Описание: Деревянный, раздвижной. В наличии: 2 шт.",
+                "Длина: 150,00 см., ширина: 70,00 см., высота: 100,00 см."
+            };
+
+            table.Description = "Деревянный, раздвижной";
+            table.Availability = 2;
+
+            TextWriter oldOut = Console.Out;
+
+            using (FileStream file = new FileStream("test.txt", FileMode.Create))
+            {
+                using (TextWriter writer = new StreamWriter(file))
+                {
+                    Console.SetOut(writer); table.PrintInfo();
+                }
+            }
+
+            Console.SetOut(oldOut);
+
+            using (FileStream file = new FileStream("test.txt", FileMode.Open))
+            {
+                using (TextReader reader = new StreamReader(file))
+                {
+                    var i = 0; while (!(reader as StreamReader).EndOfStream)
+                    Assert.AreEqual(lines[i++], reader.ReadLine());
+                    Assert.AreEqual(lines.Length, i);
+                }
+            }
+
+            File.Delete("test.txt");
+        }
+        private DimensionalGoods GetTestDimensionalGoods()
+        {
+            var goods = new DimensionalGoods("T2M34K", "Table", 5000, 6500, UnitOfGoods.Piece, 150, 70, 100);
+            return goods;
+        }
+    }
 }
